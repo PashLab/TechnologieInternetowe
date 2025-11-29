@@ -1,0 +1,71 @@
+#######################
+
+### lista postow
+
+GET http://localhost:3000/api/posts
+
+### dodanie posta
+
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+"title": "Post z Thunder Client",
+"body": "Treść posta utworzonego w ThClient."
+}
+
+### dodanie posta
+
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+"title": "Post z Thunder Client",
+"body": "Treść posta utworzonego w ThClient."
+}
+
+### dodanie posta bez wymaganych pol
+
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+"title": "",
+"body": ""
+}
+
+### wyswietlanie szczegolow posta o ID
+
+GET http://localhost:3000/api/posts/3
+
+### wyswietlanie komentarzy zatwierdzonych
+
+GET http://localhost:3000/api/posts/1/comments
+
+### dodoanie komentarza
+
+POST http://localhost:3000/api/posts/1/comments
+Content-Type: application/json
+
+{
+"author": "Thunder Tester",
+"body": "Komentarz dodoany z ThClient."
+}
+
+### dodoanie komentarza bez wymaganych danych
+
+POST http://localhost:3000/api/posts/1/comments
+Content-Type: application/json
+
+{
+"author": "",
+"body": ""
+}
+
+### wyswietlanie kometrazy oczekujacych
+
+GET http://localhost:3000/api/comments/pending
+
+### zatwierdzenie komentarza oczekujacego
+
+POST http://localhost:3000/api/comments/4/approve

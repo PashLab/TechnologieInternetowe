@@ -1,0 +1,75 @@
+#######################
+
+### pelny ranking filmow
+
+GET http://localhost:3000/api/movies
+
+### dodanie filmu
+
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+"title": "Straszny film 2",
+"year": 2000
+}
+
+### dodanie filmu bez wymaganych danych
+
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+
+{
+"title": "",
+"year": ""
+}
+
+### ocenianie filmu
+
+POST http://localhost:3000/api/ratings
+Content-Type: application/json
+
+{
+"movie_id": 8,
+"score": 5
+}
+
+### ocenianie filmu spoza zakresu ocen 1-5
+
+POST http://localhost:3000/api/ratings
+Content-Type: application/json
+
+{
+"movie_id": 7,
+"score": 6
+}
+
+### ocenianie filmu ktorego nie ma
+
+POST http://localhost:3000/api/ratings
+Content-Type: application/json
+
+{
+"movie_id": 700,
+"score": 5
+}
+
+### filtrowanie po roku
+
+GET http://localhost:3000/api/movies?year=2000
+
+### filtrowanie po ilosci max4
+
+GET http://localhost:3000/api/movies?limit=4
+
+### filtrowanie po roku i ilosci max2
+
+GET http://localhost:3000/api/movies?year=2000&limit=2
+
+### filtrowanie top 3
+
+GET http://localhost:3000/api/movies/top?limit=3
+
+### filtrowanie top 2 z roku
+
+GET http://localhost:3000/api/movies/top?limit=2&year=2000

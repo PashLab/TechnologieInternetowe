@@ -1,0 +1,55 @@
+### lista produktow
+
+GET http://localhost:3000/api/products
+
+### dodanie produktu
+
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+"name": "Słuchawki",
+"price": 199.5
+}
+
+### zawartosc koszyka
+
+GET http://localhost:3000/api/cart
+
+### dodanie prod do koszyka
+
+POST http://localhost:3000/api/cart/add
+Content-Type: application/json
+
+{
+"product_id": 1,
+"qty": 2
+}
+
+### dodanie prod do koszyka
+
+POST http://localhost:3000/api/cart/add
+Content-Type: application/json
+
+{
+"product_id": 4,
+"qty": 3
+}
+
+### zmiana ilosci prod. w koszyku
+
+PATCH http://localhost:3000/api/cart/item
+Content-Type: application/json
+
+{
+"product_id": 1,
+"qty": 5
+}
+
+### usuniecie prod. z koszyka
+
+DELETE http://localhost:3000/api/cart/item/1
+
+### chceckout jako zlozenie zamowienia
+
+POST http://localhost:3000/api/checkout

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>WYPOŻYCZALNIA Książek</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!--<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    nav a { margin-right: 15px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+    th { background: #f0f0f0; }
+    .badge { padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+    .badge-ok { background: #d4f5d4; }
+    .badge-no { background: #f5d4d4; }
+    form { margin-top: 15px; }
+    label { display: block; margin-top: 5px; }
+    input[type="text"], input[type="number"], input[type="email"] { padding: 4px; width: 250px; }
+    button { padding: 4px 10px; cursor: pointer; }
+  </style>-->
+</head>
+<body>
+  <h1>WYPOŻYCZALNIA Książek</h1>
+
+  <nav class="navbar">
+  <div class="nav-left">
+    <a href="/">Książki</a>
+    <a href="/members.html">Osoby</a>
+    <a href="/loans.html">Wypożyczenia</a>
+  </div>
+
+  <div class="nav-right">
+    <button id="themeToggle">Tryb ciemny</button>
+  </div>
+</nav>
+
+  <h2>Lista książek</h2>
+
+  <div>
+    <label>
+      Filtruj po autorze:
+      <input type="text" id="authorFilter" />
+    </label>
+    <button id="filterBtn">Szukaj</button>
+  </div>
+
+  <table id="booksTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tytuł</th>
+        <th>Autor</th>
+        <th>Kopie (łącznie)</th>
+        <th>Dostępne</th>
+        <th>Akcja</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <h2>Wypożycz książkę</h2>
+  <p><small>Wybierz książkę przyciskiem „Wypożycz” – ID książki zostanie wstawione do formularza.</small></p>
+
+  <form id="borrowForm">
+    <label>
+      ID klienta (member_id):
+      <input type="number" name="member_id" required />
+    </label>
+    <label>
+      ID książki (book_id):
+      <input type="number" name="book_id" id="borrowBookId" required />
+    </label>
+    <label>
+      Liczba dni (domyślnie 14):
+      <input type="number" name="days" value="14" />
+    </label>
+    <button type="submit">Wypożycz</button>
+  </form>
+
+  <h2>Dodaj nową książkę</h2>
+
+  <form id="bookForm">
+    <label>
+      Tytuł:
+      <input type="text" name="title" required />
+    </label>
+    <label>
+      Autor:
+      <input type="text" name="author" required />
+    </label>
+    <label>
+      Liczba egzemplarzy (domyślnie 1):
+      <input type="number" name="copies" min="1" />
+    </label>
+    <button type="submit">Dodaj książkę</button>
+  </form>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Szczegóły posta</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="top-nav">
+      <a href="/" class="back-link">Powrót do listy postów</a>
+      <a href="/moderation" class="chip-link">Panel moderatora</a>
+    </div>
+
+    <div class="card">
+      <header>
+        <h1 id="post-title">Ładowanie posta...</h1>
+        <p id="post-date" class="post-meta"></p>
+      </header>
+      <p id="post-body" style="margin-top: 12px;"></p>
+    </div>
+
+    <div class="card">
+      <section>
+        <h2>Komentarze</h2>
+        <p class="alert" id="comments-info">
+          Widzisz tylko komentarze zatwierdzone przez moderatora.
+        </p>
+        <ul id="comments-list" class="comments-list"></ul>
+      </section>
+    </div>
+
+    <div class="card">
+      <section>
+        <h2>Dodaj komentarz</h2>
+        <p class="alert">
+          Komentarz trafi do moderacji. Staraj się pisać kulturalnie i na temat.
+        </p>
+        <form id="comment-form">
+          <div>
+            <label>
+              Autor
+              <input type="text" id="author" placeholder="Twoje imię lub nick" required />
+            </label>
+          </div>
+          <div>
+            <label>
+              Komentarz
+              <textarea id="body" rows="3" placeholder="Co o tym myślisz?" required></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Wyślij komentarz</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="footer">
+      Komentarze są moderowane. Dziękujemy za kulturę wypowiedzi!
+    </div>
+  </div>
+
+  <script>
+    const pathParts = window.location.pathname.split('/');
+    const postId = pathParts[pathParts.length - 1];
+
+    async function loadPost() {
+      const res = await fetch('/api/posts/' + postId);
+      if (!res.ok) {
+        document.getElementById('post-title').textContent = 'Post nie znaleziony';
+        document.getElementById('post-body').textContent = '';
+        document.getElementById('post-date').textContent = '';
+        return;
+      }
+      const post = await res.json();
+      document.getElementById('post-title').textContent = post.title;
+      document.getElementById('post-body').textContent = post.body;
+      document.getElementById('post-date').textContent = 'Utworzono: ' + post.created_at;
+    }
+
+    async function loadComments() {
+      const res = await fetch('/api/posts/' + postId + '/comments');
+      const data = await res.json();
+      const comments = data.comments || data;
+      const ul = document.getElementById('comments-list');
+      ul.innerHTML = '';
+
+      if (!comments.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Brak zatwierdzonych komentarzy. Bądź pierwszą osobą, która coś napisze!';
+        ul.appendChild(li);
+        return;
+      }
+
+      comments.forEach((c) => {
+        const li = document.createElement('li');
+        const header = document.createElement('div');
+        header.className = 'comment-header';
+
+        const authorSpan = document.createElement('span');
+        authorSpan.className = 'comment-author';
+        authorSpan.textContent = c.author;
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'comment-date';
+        dateSpan.textContent = ' • ' + c.created_at;
+
+        header.appendChild(authorSpan);
+        header.appendChild(dateSpan);
+
+        const bodyP = document.createElement('p');
+        bodyP.className = 'comment-body';
+        bodyP.textContent = c.body;
+
+        li.appendChild(header);
+        li.appendChild(bodyP);
+
+        ul.appendChild(li);
+      });
+    }
+
+    document.getElementById('comment-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const author = document.getElementById('author').value.trim();
+      const body = document.getElementById('body').value.trim();
+
+      if (!author || !body) return;
+
+      const res = await fetch('/api/posts/' + postId + '/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ author, body })
+      });
+
+      if (res.status === 201) {
+        alert('Dziękujemy! Twój komentarz czeka na akceptację moderatora.');
+        document.getElementById('author').value = '';
+        document.getElementById('body').value = '';
+      } else if (res.status === 429) {
+        const data = await res.json();
+        alert(data.error || 'Zbyt wiele komentarzy. Spróbuj za chwilę.');
+      } else {
+        alert('Błąd dodawania komentarza.');
+      }
+    });
+
+    loadPost();
+    loadComments();
+  </script>
+</body>
+</html>

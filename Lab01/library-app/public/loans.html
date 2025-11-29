@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>WYPOŻYCZALNIA - Wypożyczenia</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <!--<style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    nav a { margin-right: 15px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+    th { background: #f0f0f0; }
+    .badge { padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+    .badge-active { background: #ffdca8; }
+    .badge-returned { background: #d4f5d4; }
+    button { padding: 4px 10px; cursor: pointer; }
+  </style>-->
+</head>
+<body>
+  <h1>WYPOŻYCZALNIA - Wypożyczenia</h1>
+
+  <nav class="navbar">
+  <div class="nav-left">
+    <a href="/">Książki</a>
+    <a href="/members.html">Osoby</a>
+    <a href="/loans.html">Wypożyczenia</a>
+  </div>
+
+  <div class="nav-right">
+    <button id="themeToggle">Tryb ciemny</button>
+  </div>
+</nav>
+
+  <h2>Lista wypożyczeń</h2>
+  <p><small>Tylko aktywne wypożyczenia można zwrócić przyciskiem „Zwróć”.</small></p>
+
+  <table id="loansTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Klienci</th>
+        <th>Książka</th>
+        <th>Data wypożyczenia</th>
+        <th>Termin zwrotu</th>
+        <th>Data zwrotu</th>
+        <th>Status</th>
+        <th>Akcja</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="main.js"></script>
+</body>
+</html>

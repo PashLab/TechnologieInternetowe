@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Panel moderatora</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="top-nav">
+      <a href="/" class="back-link">Powrót do bloga</a>
+    </div>
+
+    <div class="card">
+      <header>
+        <h1>Panel moderatora</h1>
+        <p class="subtitle">
+          Tutaj zatwierdzasz komentarze zanim trafią do publicznego widoku
+        </p>
+      </header>
+    </div>
+
+    <div class="card">
+      <section>
+        <h2>Oczekujące komentarze</h2>
+        <p class="alert">
+          Przejrzyj treści i zatwierdź tylko te, które są kulturalne i na temat.
+        </p>
+        <div id="pending-list"></div>
+      </section>
+    </div>
+
+    <div class="footer">
+      Dobra moderacja, to przyjazny blog.
+    </div>
+  </div>
+
+  <script>
+    async function loadPending() {
+      const res = await fetch('/api/comments/pending');
+      const comments = await res.json();
+      const container = document.getElementById('pending-list');
+      container.innerHTML = '';
+
+      if (!comments.length) {
+        const p = document.createElement('p');
+        p.textContent = 'Brak komentarzy oczekujących na zatwierdzenie.';
+        container.appendChild(p);
+        return;
+      }
+
+      comments.forEach((c) => {
+        const div = document.createElement('div');
+        div.className = 'pending-item';
+
+        const header = document.createElement('div');
+        header.className = 'pending-item-header';
+        header.innerHTML = `<strong>Post:</strong> ${c.post_title} <small>(ID posta: ${c.post_id})</small>`;
+        
+        const authorP = document.createElement('p');
+        authorP.innerHTML = `<strong>Autor:</strong> ${c.author}`;
+
+        const bodyP = document.createElement('p');
+        bodyP.textContent = c.body;
+
+        const dateP = document.createElement('p');
+        dateP.innerHTML = `<small>${c.created_at}</small>`;
+
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-secondary btn-small';
+        btn.textContent = 'Zatwierdź';
+        btn.addEventListener('click', async () => {
+          const res = await fetch('/api/comments/' + c.id + '/approve', {
+            method: 'POST'
+          });
+
+          if (res.ok) {
+            alert('Komentarz zatwierdzony i widoczny na blogu.');
+            loadPending();
+          } else {
+            alert('Błąd zatwierdzania komentarza.');
+          }
+        });
+
+        div.appendChild(header);
+        div.appendChild(authorP);
+        div.appendChild(bodyP);
+        div.appendChild(dateP);
+        div.appendChild(btn);
+
+        container.appendChild(div);
+      });
+    }
+
+    loadPending();
+  </script>
+</body>
+</html>
