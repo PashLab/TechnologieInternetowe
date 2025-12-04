@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Filmy i Oceny</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Filmy i Oceny</h1>
+      <p>Dodawaj filmy, wystawiaj oceny i obserwuj ranking na żywo.</p>
+    </header>
+
+    <div class="theme-toggle">
+  <button id="toggle-theme">Tryb ciemny</button>
+</div>
+
+    <div class="layout">
+      <!--LEWA KOLUMNA formularze-->
+      <div class="left">
+        <div class="panel">
+          <h2>Dodaj nowy film</h2>
+          <form id="movie-form">
+            <label>
+              Tytuł
+              <input type="text" id="title" required />
+            </label>
+            <label>
+              Rok
+              <input type="number" id="year" required />
+            </label>
+            <button>Dodaj film</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h2>Oceń film</h2>
+          <form id="rating-form">
+            <label>
+              ID filmu
+              <input type="number" id="movie_id" required />
+            </label>
+            <label>
+              Ocena (1–5)
+              <input type="number" id="score" min="1" max="5" required />
+            </label>
+            <button>Wyślij ocenę</button>
+          </form>
+        </div>
+      </div>
+
+      <!--PRAWA KOLUMNA: ranking +filtry-->
+      <div class="right">
+        <div class="panel">
+          <h2>Ranking filmów</h2>
+          <form id="filter-form">
+            <label>
+              Rok (opcjonalnie)
+              <input type="number" id="filter-year" />
+            </label>
+            <label>
+              Top N (opcjonalnie)
+              <input type="number" id="filter-limit" min="1" />
+            </label>
+            <div class="filters-buttons">
+              <button type="submit">Zastosuj filtr / Top N</button>
+              <button type="button" id="reset-filters">Pokaż wszystkie</button>
+            </div>
+          </form>
+
+          <ul id="movies-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadMovies(url = '/api/movies') {
+      const res = await fetch(url);
+      const movies = await res.json();
+      const list = document.getElementById('movies-list');
+      list.innerHTML = "";
+
+      if (!movies.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Brak filmów dla wybranych filtrów.';
+        list.appendChild(li);
+        return;
+      }
+
+      movies.forEach(m => {
+        const li = document.createElement('li');
+        li.className = "movie-item";
+        li.innerHTML = `
+            <div class="movie-header">
+                <strong>${m.title} (${m.year})</strong>
+                <span class="movie-id">ID: ${m.id}</span>
+            </div>
+            <div class="movie-meta">
+                Średnia: ${m.avg_score ?? 0} (głosów: ${m.votes})
+            </div>
+        `;
+        list.appendChild(li);
+        });
+
+    }
+
+    //dodawanie filmu
+    document.getElementById('movie-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value;
+      const year = document.getElementById('year').value;
+
+      await fetch('/api/movies', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, year })
+      });
+
+      e.target.reset();
+      loadMovies();
+    });
+
+    //dodawanie oceny
+    document.getElementById('rating-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const movie_id = Number(document.getElementById('movie_id').value);
+      const score = Number(document.getElementById('score').value);
+
+      const res = await fetch('/api/ratings', {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ movie_id, score })
+      });
+
+      if (!res.ok) {
+        const data = await res.json();
+        alert("Błąd: " + data.error);
+      }
+
+      e.target.reset();
+      loadMovies();
+    });
+
+    //filtry: rok +Top N
+    document.getElementById('filter-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const year = document.getElementById('filter-year').value;
+      const limit = document.getElementById('filter-limit').value;
+
+      let url = '/api/movies';
+
+      if (limit) {
+        url = `/api/movies/top?limit=${encodeURIComponent(limit)}`;
+        if (year) {
+          url += `&year=${encodeURIComponent(year)}`;
+        }
+      } else if (year) {
+        url = `/api/movies?year=${encodeURIComponent(year)}`;
+      }
+
+      loadMovies(url);
+    });
+
+    //reset filtrow
+    document.getElementById('reset-filters').addEventListener('click', () => {
+      document.getElementById('filter-year').value = '';
+      document.getElementById('filter-limit').value = '';
+      loadMovies();
+    });
+
+    //start
+    loadMovies();
+
+    //tryb ciemny /jasny
+    const themeBtn = document.getElementById("toggle-theme");
+
+    themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+            themeBtn.textContent = "Tryb jasny";
+        } else {
+            themeBtn.textContent = "Tryb ciemny";
+        }
+    });
+  </script>
+</body>
+</html>

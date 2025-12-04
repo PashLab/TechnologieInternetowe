@@ -1,0 +1,294 @@
+/*===== reset i podstawy =====*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f7f2f5;
+  color: #2d142c;
+  line-height: 1.6;
+}
+
+/*===== layout glowny =====*/
+.app {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 16px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+/*===== kolory =====*/
+:root {
+  --burgundy: #7c1233;
+  --burgundy-dark: #5a0a25;
+  --burgundy-light: #f5e0e7;
+  --accent: #ffb3c6;
+}
+
+/*===== naglowek =====*/
+header {
+  margin-bottom: 24px;
+}
+
+header .subtitle {
+  color: #6b6b6b;
+  font-size: 0.9rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: var(--burgundy-dark);
+  margin-bottom: 8px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: var(--burgundy-dark);
+}
+
+a {
+  color: var(--burgundy);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/*===== przyciski =====*/
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+
+.btn-primary {
+  background: var(--burgundy);
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(122, 8, 45, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--burgundy-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(122, 8, 45, 0.4);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--burgundy-dark);
+  border: 1px solid var(--burgundy-light);
+}
+
+.btn-secondary:hover {
+  background: var(--burgundy-light);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+/*===== formularze =====*/
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #d1c2cd;
+  font-size: 0.95rem;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  background: #fdf9fb;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--burgundy);
+  box-shadow: 0 0 0 3px rgba(124, 18, 51, 0.15);
+  background: #ffffff;
+}
+
+/*===== lista postow =====*/
+.posts-list {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.posts-list li {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #f0d7e1;
+  background: #fff5f8;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.1s ease;
+}
+
+.posts-list li:hover {
+  background: #ffe6ee;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(100, 16, 40, 0.15);
+}
+
+.post-title-link {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.post-meta {
+  font-size: 0.8rem;
+  color: #7d6477;
+}
+
+/*===== komm =====*/
+.comments-list {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.comments-list li {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fdf2f6;
+  border: 1px solid #f0d7e1;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: 600;
+  color: var(--burgundy-dark);
+}
+
+.comment-date {
+  font-size: 0.75rem;
+  color: #8b7487;
+}
+
+.comment-body {
+  margin-top: 4px;
+}
+
+/*===== alert info =====*/
+.alert {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  background: #fff5f8;
+  border: 1px dashed #f0d7e1;
+  color: #8b314a;
+}
+
+/*===== nav gorna /linki =====*/
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.top-nav-left,
+.top-nav-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.chip-link {
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--burgundy-light);
+}
+
+/*=====sekcja moderacji =====*/
+.pending-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #f0d7e1;
+  background: #fff5f8;
+  margin-bottom: 10px;
+}
+
+.pending-item-header {
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.pending-item small {
+  color: #7d6477;
+}
+
+/*===== link powrotu =====*/
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.back-link::before {
+  content: "←";
+  font-size: 1rem;
+}
+
+/*===== stopka mala =====*/
+.footer {
+  margin-top: 24px;
+  font-size: 0.8rem;
+  color: #8b7487;
+  text-align: center;
+}
+
+/*===== responsywnosc =====*/
+@media (max-width: 600px) {
+  .app {
+    margin: 20px auto;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .card {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,110 @@
+/*===GLOBAL STYLE===*/
+/*==================*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #fafafa;
+}
+
+h1 {
+  background: linear-gradient(90deg, #1b3a57, #3a6ea5);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #1b3a57;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/*produkty i koszyk*/
+.panel {
+  background: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  flex: 1;
+  min-width: 0;
+}
+
+/*bab*/
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background: #f1f1f1;
+}
+
+/*przyciski*/
+button {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-add {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-update {
+  background: #2980b9;
+  color: white;
+  margin-right: 4px;
+}
+
+.btn-remove {
+  background: #c0392b;
+  color: white;
+}
+
+.btn-checkout {
+  margin-top: 10px;
+  background: #8e44ad;
+  color: white;
+  width: 100%;
+  padding: 8px 10px;
+}
+
+/*input w koszyku*/
+input[type="number"] {
+  width: 60px;
+}
+
+/*teksty pomocnicze*/
+.total {
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.empty {
+  font-style: italic;
+  color: #777;
+  margin-top: 8px;
+}

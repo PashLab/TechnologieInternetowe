@@ -1,0 +1,226 @@
+/*=== GLOBAL STYLE ===*/
+/*====================*/
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #fafafa;
+}
+
+nav a {
+  margin-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #1b3a57;
+}
+
+/*Pasek tytulu*/
+h1 {
+  background: linear-gradient(90deg, #1b3a57, #3a6ea5);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+}
+
+h2 {
+  margin-top: 25px;
+  color: #1b3a57;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 10px;
+  background: white;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+th {
+  background: #f1f1f1;
+}
+
+/*znaczniki dostepności*/
+.badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: white;
+}
+
+.badge-ok {
+  background: #27ae60;
+}
+
+.badge-no {
+  background: #c0392b;
+}
+
+/*status w tab.wypo.*/
+.badge-active {
+  background: #f39c12;
+}
+
+.badge-returned {
+  background: #2ecc71;
+}
+
+button {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/*wypoycz*/
+.btn-borrow {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-borrow:disabled {
+  background: #aaa;
+  cursor: not-allowed;
+}
+
+/*zwroc*/
+.btn-return {
+  background: #2980b9;
+  color: white;
+}
+
+/*formularze*/
+form {
+  margin-top: 15px;
+  padding: 12px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  width: 350px;
+}
+
+label {
+  display: block;
+  margin-top: 6px;
+  font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="email"] {
+  padding: 6px;
+  width: 95%;
+  margin-top: 3px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/*odstep pod polem do filtracji*/
+#authorFilter {
+  margin-bottom: 1px;
+  width: 300px;
+  display: block;
+}
+
+#filterBtn {
+  margin-top: 5px;
+  display: inline-block;
+}
+
+/*odstepy przyciskow pod formularzami*/
+form button {
+  margin-top: 10px;
+  width: auto;
+  padding: 6px 12px;
+}
+
+/*==========DARK MODE==========*/
+body.theme-dark {
+  background: #121212;
+  color: #e6e6e6;
+}
+
+/*nagłówek*/
+body.theme-dark h1 {
+  background: linear-gradient(90deg, #000000, #333333);
+  color: #ffffff;
+}
+
+/*linki*/
+body.theme-dark nav a {
+  color: #b3d4ff;
+}
+
+/*przycisk zmiany motywu*/
+#themeToggle {
+  margin-left: 15px;
+  background: #e6e6e6;
+  padding: 4px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+body.theme-dark #themeToggle {
+  background: #333333;
+  color: white;
+}
+
+/*tab*/
+body.theme-dark table {
+  background: #1e1e1e;
+  color: #ffffff;
+  box-shadow: none;
+}
+
+body.theme-dark th {
+  background: #222222;
+  color: #ffffff;
+}
+
+body.theme-dark td, 
+body.theme-dark th {
+  border-color: #333333;
+}
+
+/*formularze*/
+body.theme-dark form {
+  background: #1e1e1e;
+  box-shadow: none;
+}
+
+body.theme-dark input[type="text"],
+body.theme-dark input[type="number"],
+body.theme-dark input[type="email"] {
+  background: #111111;
+  color: #ffffff;
+  border: 1px solid #555555;
+}
+
+/*przyciski glowne*/
+body.theme-dark button.btn-borrow {
+  background: #1b8c4a;
+}
+
+body.theme-dark button.btn-return {
+  background: #1b4f8c;
+}
+
+/*NAV tryb ciemny/jasny*/
+.navbar {
+  display: flex;
+  justify-content: space-between; /*lewa strona linkow + prawa strona z przyciskiem*/
+  align-items: center;
+  padding: 10px 0;
+}
+
+.nav-left a {
+  margin-right: 15px;
+}
+
+.nav-right {
+  margin-left: auto;
+}

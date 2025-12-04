@@ -1,0 +1,105 @@
+##################
+
+### wyswietlenie tablic
+
+GET http://localhost:3000/api/board
+
+### dodanie zadania
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "Zrobić pranie",
+"col_id": 1
+}
+
+### dodanie zadania
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "Odpowiedzieć na wczorajsze maile",
+"col_id": 1
+}
+
+### dodanie zadania bez opisu zadania
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "",
+"col_id": 1
+}
+
+### dodanie zadania bez kolumny
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "Bez podania kolumny",
+"col_id":
+}
+
+### dodanie zadania bez wymaganych danych
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "",
+"col_id":
+}
+
+### dodanie zadania do nieistniejącej kolumny
+
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+"title": "Nie ma takiej kolumny",
+"col_id": 30
+}
+
+### przeniesienie między kolumnami
+
+POST http://localhost:3000/api/tasks/1/move
+Content-Type: application/json
+
+{
+"col_id": 2,
+"ord": 1
+}
+
+### przeniesienie między kolumnami
+
+POST http://localhost:3000/api/tasks/6/move
+Content-Type: application/json
+
+{
+"col_id": 2,
+"ord": 1
+}
+
+### przeniesienie między kolumnami
+
+POST http://localhost:3000/api/tasks/9/move
+Content-Type: application/json
+
+{
+"col_id": 2,
+"ord": 1
+}
+
+### przeniesienie między kolumnami na koniec listy
+
+POST http://localhost:3000/api/tasks/9/move
+Content-Type: application/json
+
+{
+"col_id": 3,
+"ord": 99
+}

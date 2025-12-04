@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Notatki</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Notatki</h1>
+        <p>Zapisuj pomysły, dodawaj tagi i wyszukuj po treści.</p>
+      </header>
+
+      <div class="theme-toggle">
+        <button id="toggle-theme">Tryb ciemny</button>
+      </div>
+      
+      <section class="top-bar">
+        <form id="search-form">
+          <input
+            id="search-input"
+            type="text"
+            placeholder="Szukaj w tytule i treści..."
+          />
+          <select id="tag-filter">
+            <option value="">Wszystkie tagi</option>
+          </select>
+          <button type="submit">Szukaj</button>
+        </form>
+      </section>
+
+      <main class="layout">
+        <section class="notes-panel">
+          <h2>Notatki</h2>
+          <div id="notes-list" class="notes-list">
+            <!--tu wstrzykujemy notatki-->
+          </div>
+        </section>
+
+        <section class="side-panel">
+          <div class="card">
+            <h3>Nowa notatka</h3>
+            <form id="new-note-form">
+              <label>
+                Tytuł
+                <input type="text" name="title" required />
+              </label>
+              <label>
+                Treść
+                <textarea name="body" rows="4" required></textarea>
+              </label>
+              <label>
+                Tagi (oddzielone przecinkami, np. work,home)
+                <input type="text" name="tags" />
+              </label>
+              <button type="submit">Dodaj notatkę</button>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Dodaj tagi do notatki</h3>
+            <form id="add-tags-form">
+              <label>
+                ID notatki
+                <input type="number" name="noteId" min="1" required />
+              </label>
+              <label>
+                Tagi (oddzielone przecinkami)
+                <input type="text" name="tags" required />
+              </label>
+              <button type="submit">Dodaj tagi</button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const notesListEl = document.getElementById("notes-list");
+      const searchForm = document.getElementById("search-form");
+      const searchInput = document.getElementById("search-input");
+      const tagFilter = document.getElementById("tag-filter");
+      const newNoteForm = document.getElementById("new-note-form");
+      const addTagsForm = document.getElementById("add-tags-form");
+
+      let currentQuery = "";
+      let currentTag = "";
+
+      function escapeHtml(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      function highlight(text, q) {
+        if (!q) return escapeHtml(text);
+        const re = new RegExp(
+          "(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")",
+          "ig"
+        );
+        return escapeHtml(text).replace(re, "<mark>$1</mark>");
+      }
+
+      async function loadTags() {
+        const res = await fetch("/api/tags");
+        const tags = await res.json();
+        tagFilter.innerHTML = '<option value="">Wszystkie tagi</option>';
+        for (const t of tags) {
+          const opt = document.createElement("option");
+          opt.value = t.name;
+          opt.textContent = t.name;
+          tagFilter.appendChild(opt);
+        }
+      }
+
+      async function loadNotes() {
+        const params = new URLSearchParams();
+        if (currentQuery) params.append("q", currentQuery);
+        if (currentTag) params.append("tag", currentTag);
+
+        const res = await fetch("/api/notes?" + params.toString());
+        const notes = await res.json();
+        renderNotes(notes);
+      }
+
+      function renderNotes(notes) {
+        notesListEl.innerHTML = "";
+        if (notes.length === 0) {
+          notesListEl.innerHTML =
+            '<p class="empty">Brak notatek dla podanych kryteriów.</p>';
+          return;
+        }
+
+        for (const n of notes) {
+          const div = document.createElement("article");
+          div.className = "note";
+
+          const created = new Date(n.created_at).toLocaleString("pl-PL", {
+            dateStyle: "short",
+            timeStyle: "short",
+          });
+
+          //fragment z tresci
+          const bodySnippet =
+            n.body.length > 160 ? n.body.slice(0, 157) + "…" : n.body;
+
+          div.innerHTML = `
+          <header class="note-header">
+            <h3>${highlight(n.title, currentQuery)}</h3>
+            <span class="note-date">${created}</span>
+          </header>
+          <p class="note-body">${highlight(bodySnippet, currentQuery)}</p>
+          <div class="note-tags">
+            ${
+              n.tags && n.tags.length
+                ? n.tags
+                    .map((t) => `<span class="tag" data-tag="${t}">${t}</span>`)
+                    .join("")
+                : '<span class="tag tag-empty">brak tagów</span>'
+            }
+          </div>
+          <div class="note-meta">ID: ${n.id}</div>
+        `;
+          notesListEl.appendChild(div);
+        }
+
+        //klik w tag ustawia filtr
+        notesListEl.querySelectorAll(".tag[data-tag]").forEach((el) => {
+          el.addEventListener("click", () => {
+            currentTag = el.dataset.tag;
+            tagFilter.value = currentTag;
+            loadNotes();
+          });
+        });
+      }
+
+      searchForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        currentQuery = searchInput.value.trim();
+        currentTag = tagFilter.value;
+        loadNotes();
+      });
+
+      tagFilter.addEventListener("change", () => {
+        currentTag = tagFilter.value;
+        loadNotes();
+      });
+
+      newNoteForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(newNoteForm);
+        const title = formData.get("title").trim();
+        const body = formData.get("body").trim();
+        const tagsRaw = formData.get("tags").trim();
+
+        if (!title || !body) {
+          alert("Tytuł i treść są wymagane.");
+          return;
+        }
+
+        const res = await fetch("/api/notes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ title, body }),
+        });
+
+        if (!res.ok) {
+          alert("Błąd przy tworzeniu notatki.");
+          return;
+        }
+
+        const note = await res.json();
+
+        if (tagsRaw) {
+          const tags = tagsRaw
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean);
+          if (tags.length) {
+            await fetch(`/api/notes/${note.id}/tags`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ tags }),
+            });
+          }
+        }
+
+        newNoteForm.reset();
+        await loadTags();
+        await loadNotes();
+      });
+
+      addTagsForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(addTagsForm);
+        const noteId = Number(formData.get("noteId"));
+        const tagsRaw = formData.get("tags").trim();
+
+        if (!noteId || !tagsRaw) {
+          alert("Podaj ID notatki i co najmniej jeden tag.");
+          return;
+        }
+
+        const tags = tagsRaw
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean);
+        if (!tags.length) {
+          alert("Brak poprawnych tagów.");
+          return;
+        }
+
+        const res = await fetch(`/api/notes/${noteId}/tags`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ tags }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          alert("Błąd przy dodawaniu tagów: " + (data.error || res.status));
+          return;
+        }
+
+        addTagsForm.reset();
+        await loadTags();
+        await loadNotes();
+      });
+
+      //start
+      loadTags();
+      loadNotes();
+
+      //tryb ciemny
+      const themeBtn = document.getElementById("toggle-theme");
+
+      themeBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+            themeBtn.textContent = "Tryb jasny";
+        } else {
+            themeBtn.textContent = "Tryb ciemny";
+        }
+      });     
+      
+    </script>
+  </body>
+</html>

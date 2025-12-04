@@ -1,0 +1,68 @@
+##################
+
+### wyswietlanie notatel
+
+GET http://localhost:3000/api/notes
+
+### wyswietlanie notatki zawierajacej frazę "*plan*"
+GET http://localhost:3000/api/notes?q=plan
+
+### wyswietlanie notatki z tagiem "work"
+GET http://localhost:3000/api/notes?tag=work
+
+
+### wyswietlanie wszytskich tagów
+GET http://localhost:3000/api/tags
+
+### dodanie notatki bez treści
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "title": "Brak treści notatki",
+  "body": ""
+}
+
+
+### dodanie notatki bez tytułu
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "title": "",
+  "body": "Brak tytułu notatki"
+}
+
+### dodanie notatki PRAWIDŁOWE
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "title": "Kontrola u weterynarza",
+  "body": "Wizyta kontrolna z Pimpkiem, dr Filipowicz,4 stycznia godz. 17:30 + badania kontrolne krwi."
+}
+
+### dodanie notatki PRAWIDŁOWE
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "title": "Zadania - uczelnia",
+  "body": "Dokończyć projekty, wysłac sprawozdania, przesłać maila do promotora, wypełnić ankietę semestralną, ogarnąć notatki z matmy do końca tyg."
+}
+
+### dodanie tagów do istniejącej notatki
+POST http://localhost:3000/api/notes/4/tags?
+Content-Type: application/json
+
+{
+  "tags": ["vet", "pets"]
+}
+
+### dodanie tagów do istniejącej notatki
+POST http://localhost:3000/api/notes/5/tags?
+Content-Type: application/json
+
+{
+  "tags": ["uni", "study"]
+}

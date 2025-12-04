@@ -1,0 +1,160 @@
+##########################################
+
+### members
+
+### lista klientow
+
+GET http://localhost:3000/api/members
+
+### dodoanie klienta
+
+POST http://localhost:3000/api/members
+Content-Type: application/json
+{
+"name": "Test User",
+"email": "test.user@example.com"
+}
+
+### dodoanie klienta z takim samym emailem
+
+POST http://localhost:3000/api/members
+Content-Type: application/json
+{
+"name": "TesKtoś Inny",
+"email": "test.user@example.com"
+}
+
+### dodoanie klienta bez wymaganych danych
+
+POST http://localhost:3000/api/members
+Content-Type: application/json
+
+{}
+
+##########################################
+
+### books
+
+### lista ksiazek
+
+GET http://localhost:3000/api/books
+
+### filtrowanie
+
+GET http://localhost:3000/api/books?author=Martin&page=1&pageSize=2
+
+### dodoanie ksiazki
+
+POST http://localhost:3000/api/books
+Content-Type: application/json
+
+{
+"title": "Nowa Książka",
+"author": "Autor Testowy",
+"copies": 2
+}
+
+### dodoanie ksiazki bez copies
+
+POST http://localhost:3000/api/books
+Content-Type: application/json
+
+{
+"title": "Książka z domyślną l. kopii",
+"author": "Ktosiek Ktośkowy"
+}
+
+### dodoanie ksiazki bez wymaganych danych
+
+POST http://localhost:3000/api/books
+Content-Type: application/json
+
+{
+"title": "",
+"author": ""
+}
+
+##########################################
+
+### loans
+
+### aktywne wypo.
+
+GET http://localhost:3000/api/loans
+
+### wypozyczenie
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 2,
+"book_id": 3,
+"days": 3
+}
+
+### wypozyczenie ksiazki ktorej nie ma
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 1,
+"book_id": 30,
+"days": 1
+}
+
+### wypozyczenie na 100 dni
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 5,
+"book_id": 4,
+"days": 100
+}
+
+### wypozyczenie na domyslna ilosc dni
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 1,
+"book_id": 2
+}
+
+### wypozyczenie ksiazki ktorej brakuje dostepnych kopii
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 1,
+"book_id": 2
+}
+
+### wypozyczenie bez wymaganych danych
+
+POST http://localhost:3000/api/loans/borrow
+Content-Type: application/json
+
+{
+"member_id": 3
+}
+
+### zwrot
+
+POST http://localhost:3000/api/loans/return
+Content-Type: application/json
+
+{
+"loan_id": 6
+}
+
+##########################################
+
+### BONUS przedawnienie zwrotu
+
+GET http://localhost:3000/api/loans/overdue

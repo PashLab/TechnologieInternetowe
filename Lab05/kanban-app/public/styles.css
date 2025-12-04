@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #fff8f6, #fbeaea);
+  color: #111827;
+  padding: 24px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #53354A;
+  margin-bottom: 4px;
+}
+
+header p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/*board*/
+.board {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/*kolumny bazowe*/
+.column {
+  flex: 1;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.theme-toggle button {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: none;
+  background: #53354A;
+  color: #fff;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.theme-toggle button:hover {
+  background: #3F2638;
+}
+
+/*kolory tabel*/
+.board .column:nth-child(1) {
+  background: #F7DDE2;
+}
+
+.board .column:nth-child(2) {
+  background: #E9A8B4;
+}
+
+.board .column:nth-child(3) {
+  background: #C26D84;
+}
+
+.column-header {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+  color: #4a1f2c;
+}
+
+/*karty*/
+.tasks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.task {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  border: 1px solid #53354A;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-title {
+  font-size: 0.9rem;
+}
+
+.task-controls button {
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+/*formularz dodania*/
+.add-form {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px dashed #cbd5f5;
+}
+
+.add-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.add-form input {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.85rem;
+}
+
+.add-form input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/*przyciski*/
+button {
+  border: none;
+  border-radius: 6px;
+  background: #53354A;
+  color: #ffffff;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3F2638;
+}
+
+/*responsywnosc*/
+@media (max-width: 900px) {
+  .board {
+    flex-direction: column;
+  }
+}
+
+/*checkmark w DONE*/
+.column:nth-child(3) .task {
+  position: relative;
+  padding-left: 28px; /*ikona po lewej*/
+}
+
+/*zielony check*/
+.column:nth-child(3) .task::before {
+  content: "✔";
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #2E6A40;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/*========== TRYB CIEMNY ==========*/
+body.dark {
+  background: linear-gradient(to right, #1a2422, #07110d);
+  color: #e5f4f4;
+}
+
+body.dark h1 {
+  color: #a7f3d0;
+}
+
+body.dark header p {
+  color: #c4e5dd;
+}
+
+/*kolumny*/
+body.dark .board .column:nth-child(1) {
+  background: #1e4c46;
+}
+
+body.dark .board .column:nth-child(2) {
+  background: #173c35;
+}
+
+body.dark .board .column:nth-child(3) {
+  background: #102c27;
+}
+
+/*naglowki kolumn*/
+body.dark .column-header {
+  color: #a7f3d0;
+}
+
+/*karty zadan*/
+body.dark .task {
+  background: #041f1a;
+  border-color: #16a34a;
+  color: #e5e7eb;
+}
+
+/*check w DONE */
+body.dark .column:nth-child(3) .task::before {
+  color: #22c55e;
+}
+
+/*formularz*/
+body.dark .add-form {
+  background: #031a15;
+  border-color: #064e3b;
+}
+
+body.dark .add-form label {
+  color: #e5e7eb;
+}
+
+body.dark .add-form input {
+  background: #041f1a;
+  border-color: #02100e;
+  color: #e5e7eb;
+}
+
+body.dark .add-form input::placeholder {
+  color: #9ca3af;
+}
+
+/*przyciski*/
+body.dark button {
+  background: #166534;
+  color: #e5f4f4;
+}
+
+body.dark button:hover {
+  background: #14532d;
+}
+
+/*przelacznik motywu*/
+body.dark .theme-toggle button {
+  background: #f9fafb;
+  color: #111827;
+}
+
+body.dark .theme-toggle button:hover {
+  background: #e5e7eb;
+}

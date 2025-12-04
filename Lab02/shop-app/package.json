@@ -1,0 +1,23 @@
+{
+  "name": "shop-app",
+  "version": "1.0.0",
+  "description": "Lab02 - Sklep (koszyk i zamówienia)",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "reset:db": "rimraf shop.db"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11",
+    "rimraf": "^6.1.2"
+  }
+}

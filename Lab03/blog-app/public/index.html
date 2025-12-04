@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <header>
+        <div class="top-nav">
+          <div class="top-nav-left">
+            <h1>BLOG</h1>
+          </div>
+          <div class="top-nav-right">
+            <a href="/moderation" class="chip-link">Panel moderatora</a>
+          </div>
+        </div>
+      </header>
+
+      <section id="new-post">
+        <h2>Dodaj nowy post</h2>
+        <p class="alert">
+          Masz pomysł, przemyślenie, historię? Napisz! Ktoś na pewno to skomentuje...
+        </p>
+        <form id="post-form">
+          <div>
+            <label>
+              Tytuł
+              <input type="text" id="title" placeholder="Np. Jak odkryłem/łam JavaScript..." required />
+            </label>
+          </div>
+          <div>
+            <label>
+              Treść
+              <textarea id="body" rows="4" placeholder="Opowiedz nam swoją historię..." required></textarea>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary">Opublikuj post</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="card">
+      <section>
+        <h2>Ostatnie posty</h2>
+        <ul id="posts-list" class="posts-list"></ul>
+      </section>
+    </div>
+
+    <div class="footer">
+      Blog
+    </div>
+  </div>
+
+  <script>
+    async function loadPosts() {
+      const res = await fetch('/api/posts');
+      const posts = await res.json();
+      const ul = document.getElementById('posts-list');
+      ul.innerHTML = '';
+
+      if (!posts.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Na razie brak postów. Bądź pierwszą osobą, która coś napisze!';
+        ul.appendChild(li);
+        return;
+      }
+
+      posts.forEach((post) => {
+        const li = document.createElement('li');
+
+        const titleLink = document.createElement('a');
+        titleLink.href = '/posts/' + post.id;
+        titleLink.textContent = post.title;
+        titleLink.className = 'post-title-link';
+
+        const meta = document.createElement('div');
+        meta.className = 'post-meta';
+        meta.textContent = 'Utworzono: ' + post.created_at;
+
+        li.appendChild(titleLink);
+        li.appendChild(meta);
+
+        ul.appendChild(li);
+      });
+    }
+
+    document.getElementById('post-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('title').value.trim();
+      const body = document.getElementById('body').value.trim();
+
+      if (!title || !body) return;
+
+      const res = await fetch('/api/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title, body })
+      });
+
+      if (res.ok) {
+        document.getElementById('title').value = '';
+        document.getElementById('body').value = '';
+        loadPosts();
+      } else {
+        alert('Błąd dodawania posta');
+      }
+    });
+
+    loadPosts();
+  </script>
+</body>
+</html>

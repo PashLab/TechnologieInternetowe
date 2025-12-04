@@ -1,0 +1,233 @@
+/*reset*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+  padding: 24px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/*naglowek*/
+header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #2563eb;
+  margin-bottom: 4px;
+}
+
+header p {
+  color: #6b7280;
+  font-size: 0.95rem;
+}
+
+/*layout 2 kolumn*/
+.layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.left,
+.right {
+  flex: 1;
+}
+
+/*panele*/
+.panel {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/*formularze*/
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+input {
+  margin-top: 4px;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/*przyciski*/
+button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  background: #10b981;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+button:hover {
+  background: #059669;
+}
+
+/*lista filmow*/
+#movies-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.movie-item {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.movie-item strong {
+  color: #111827;
+}
+
+.movie-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+/*uklad przyciskow filtrow*/
+.filters-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/*responsywnocs- na malych ekranach kolumny pod soba*/
+@media (max-width: 800px) {
+  .layout {
+    flex-direction: column;
+  }
+}
+
+.movie-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.movie-id {
+  font-size: 0.8rem;
+  color: #374151;
+  background: #e5e7eb;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.theme-toggle button {
+  background: #4b5563;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.theme-toggle button:hover {
+  background: #374151;
+}
+
+/*======== TRYB CIEMNY =========*/
+body.dark {
+  background: #111827;
+  color: #e5e7eb;
+}
+
+body.dark .panel {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark input {
+  background: #111827;
+  color: #e5e7eb;
+  border-color: #4b5563;
+}
+
+body.dark input:focus {
+  border-color: #2563eb;
+}
+
+body.dark .movie-item {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+body.dark .movie-meta {
+  color: #9ca3af;
+}
+
+body.dark h1,
+body.dark h2 {
+  color: #60a5fa;
+}
+
+body.dark button {
+  background: #10b981;
+  color: white;
+}
+
+body.dark button:hover {
+  background: #059669;
+}
+
+body.dark .theme-toggle button {
+  background: #374151;
+}
+
+body.dark .theme-toggle button:hover {
+  background: #1f2937;
+}

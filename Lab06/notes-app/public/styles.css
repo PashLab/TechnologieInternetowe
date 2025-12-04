@@ -1,0 +1,353 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*=========TRYB JASNY=========*/
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f3f4f6;
+  color: #111827;
+  padding: 24px;
+}
+
+/*kontener*/
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/*header*/
+header {
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #7a1c5c;
+  margin-bottom: 4px;
+}
+
+header p {
+  color: #6b7280;
+}
+
+/*search bar*/
+.top-bar {
+  margin-bottom: 16px;
+}
+
+#search-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#search-form input,
+#search-form select {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #111827;
+}
+
+#search-form button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #7a1c5c;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#search-form button:hover {
+  background: #6b184f;
+}
+
+/*layout*/
+.layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+/*notes*/
+.notes-panel h2 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: #111827;
+}
+
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.note {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  color: #111827;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 4px;
+}
+
+.note-header h3 {
+  color: #111827;
+  font-size: 1rem;
+}
+
+.note-date {
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.note-body {
+  color: #131313;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+}
+
+/* ID notatki – mniejsze i subtelne */
+.note-meta {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.tag:hover {
+  background: #e0e7ff;
+}
+
+.tag-empty {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+/*side panel*/
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.card h3 {
+  color: #111827;
+}
+
+.card form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  gap: 4px;
+  color: #444;
+}
+
+/*inputs*/
+.card input,
+.card textarea {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #111827;
+}
+
+.card button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #0f5f3d;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.card button:hover {
+  background: #0b4a2f;
+}
+
+/*highlight*/
+mark {
+  background: #fde047;
+  color: #111827;
+}
+
+/*empty*/
+.empty {
+  color: #6b7280;
+}
+
+/*tryb ciemny przełącznik*/
+.theme-toggle {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.theme-toggle button {
+  background: #4b5563;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.theme-toggle button:hover {
+  background: #374151;
+}
+
+/*=========TRYB CIEMNY=========*/
+body.dark {
+  background: #15151a;
+  color: #e5e7eb;
+}
+
+/*header*/
+body.dark h1 {
+  color: #7a1c5c;
+}
+
+body.dark header p {
+  color: #c5c6c7;
+}
+
+body.dark .notes-panel h2 {
+  color: #d1d1d1;
+}
+
+/*search*/
+body.dark #search-form input,
+body.dark #search-form select {
+  border: 1px solid #4b4b50;
+  background: #2a2a2d;
+  color: #e5e7eb;
+}
+
+/*notes*/
+body.dark .note {
+  background: #2f2f33;
+  border: 1px solid #3d3d42;
+  color: #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+body.dark .note-header h3 {
+  color: white;
+}
+
+body.dark .note-date {
+  color: #a0a0a0;
+}
+
+body.dark .note-body {
+  color: #d6d6d6;
+}
+
+body.dark .note-meta {
+  color: #999;
+}
+
+/*tags*/
+body.dark .tag {
+  background: #1f1fc6;
+  color: white;
+}
+
+body.dark .tag:hover {
+  background: #5a5a63;
+}
+
+body.dark .tag-empty {
+  background: #3a3a3d;
+  color: #7a7a7a;
+}
+
+/*side panel*/
+body.dark .card {
+  background: #2a2a2d;
+  border: 1px solid #3d3d42;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+body.dark .card h3 {
+  color: #d7d7d7;
+}
+
+body.dark .card label {
+  color: #e5e7eb;
+}
+
+/*inputs*/
+body.dark .card input,
+body.dark .card textarea {
+  background: #232326;
+  border: 1px solid #4b4b50;
+  color: #e5e7eb;
+}
+
+body.dark .card button {
+  background: #0f5f3d;
+  width: fit-content;
+}
+
+body.dark .card button:hover {
+  background: #0b4a2f;
+}
+
+/*highlight*/
+body.dark mark {
+  background: #c8a800;
+  color: black;
+}
+
+/*empty*/
+body.dark .empty {
+  color: #aaaaaa;
+}
+
+/*przelacznik*/
+body.dark .theme-toggle button {
+  background: #374151;
+}
+
+body.dark .theme-toggle button:hover {
+  background: #1f2937;
+}

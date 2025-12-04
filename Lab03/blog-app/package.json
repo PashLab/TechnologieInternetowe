@@ -1,0 +1,18 @@
+{
+  "name": "lab03-blog-moderation",
+  "version": "1.0.0",
+  "description": "Blog z komentarzami i moderacja",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "reset:db": "rimraf blog.db"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

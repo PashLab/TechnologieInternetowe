@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sklep</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Sklep (koszyk i zamówienia)</h1>
+
+  <div class="container">
+    <!--LEWA STR - lista produktow-->
+    <div class="panel">
+      <h2>Produkty</h2>
+      <table id="productsTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Akcja</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--wypelni JS-->
+        </tbody>
+      </table>
+    </div>
+
+    <!--PRAWA STR -koszyk-->
+    <div class="panel">
+      <h2>Koszyk</h2>
+      <table id="cartTable">
+        <thead>
+          <tr>
+            <th>Produkt</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+            <th>Suma</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--wypelni JS-->
+        </tbody>
+      </table>
+      <div id="cartEmpty" class="empty">Koszyk jest pusty.</div>
+      <div id="cartTotal" class="total"></div>
+      <button id="checkoutBtn" class="btn-checkout">Zamów</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

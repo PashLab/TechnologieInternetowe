@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Kanban</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Kanban</h1>
+        <p>
+          Organizuj swój dzień!
+        </p>
+
+        <div class="theme-toggle">
+            <button id="toggle-theme">Tryb ciemny</button>
+        </div>
+
+      </header>
+
+      <div id="board" class="board"></div>
+    </div>
+
+    <script>
+      let boardData = null;
+
+      async function loadBoard() {
+        const res = await fetch("/api/board");
+        boardData = await res.json();
+        renderBoard();
+      }
+
+      function renderBoard() {
+        const boardEl = document.getElementById("board");
+        boardEl.innerHTML = "";
+
+        const cols = boardData.cols.sort((a, b) => a.ord - b.ord);
+        const tasks = boardData.tasks.slice().sort((a, b) => a.ord - b.ord);
+
+        cols.forEach((col, index) => {
+          const colDiv = document.createElement("div");
+          colDiv.className = "column";
+
+          const header = document.createElement("div");
+          header.className = "column-header";
+          header.textContent = col.name;
+          colDiv.appendChild(header);
+
+          const ul = document.createElement("ul");
+          ul.className = "tasks";
+
+          tasks
+            .filter((t) => t.col_id === col.id)
+            .sort((a, b) => a.ord - b.ord)
+            .forEach((task) => {
+              const li = document.createElement("li");
+              li.className = "task";
+
+              const titleSpan = document.createElement("span");
+              titleSpan.className = "task-title";
+              titleSpan.textContent = task.title;
+
+              const controls = document.createElement("div");
+              controls.className = "task-controls";
+
+              //kolumna po prawej istnieje, dodaj przycisk "→"
+              if (index < cols.length - 1) {
+                const moveBtn = document.createElement("button");
+                moveBtn.textContent = "→";
+                moveBtn.title = "Przenieś do " + cols[index + 1].name;
+                moveBtn.addEventListener("click", () =>
+                  moveTaskRight(task.id, cols[index + 1].id)
+                );
+                controls.appendChild(moveBtn);
+              }
+
+              li.appendChild(titleSpan);
+              li.appendChild(controls);
+              ul.appendChild(li);
+            });
+
+          colDiv.appendChild(ul);
+
+          //formularz dodania zadania do tej kolumny
+          const form = document.createElement("form");
+          form.className = "add-form";
+          form.innerHTML = `
+          <label>
+            Nowe zadanie
+            <input type="text" name="title" placeholder="Opis zadania..." required />
+          </label>
+          <button type="submit">Dodaj</button>
+        `;
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const input = form.querySelector('input[name="title"]');
+            const title = input.value.trim();
+            if (!title) return;
+
+            const res = await fetch("/api/tasks", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ title, col_id: col.id }),
+            });
+
+            if (!res.ok) {
+              const data = await res.json().catch(() => ({}));
+              alert("Błąd dodawania zadania: " + (data.error || res.status));
+              return;
+            }
+
+            input.value = "";
+            loadBoard();
+          });
+
+          colDiv.appendChild(form);
+
+          boardEl.appendChild(colDiv);
+        });
+      }
+
+      async function moveTaskRight(taskId, targetColId) {
+        //ord dajemy "duze" a backend i tak przytnie do konca kolumny
+        const res = await fetch(`/api/tasks/${taskId}/move`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ col_id: targetColId, ord: 9999 }),
+        });
+
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          alert("Błąd przenoszenia zadania: " + (data.error || res.status));
+          return;
+        }
+
+        loadBoard();
+      }
+
+      loadBoard();
+
+      //tryb jasny /ciemny
+    const themeBtn = document.getElementById('toggle-theme');
+
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+
+        if (document.body.classList.contains('dark')) {
+         themeBtn.textContent = 'Tryb jasny';
+        } else {
+         themeBtn.textContent = 'Tryb ciemny';
+        }
+    });
+    
+    </script>
+  </body>
+</html>
